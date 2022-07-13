@@ -1,28 +1,13 @@
 import requests
 from flask import render_template, session, redirect, url_for, request
-from flask_login import LoginManager, login_required, login_user, UserMixin, logout_user
-from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, login_required, login_user, logout_user
 
 from app import app
 from config import url
 from myapp.forms import LoginForm, RegisterForm
-
+from myapp.models import User
 login_manager = LoginManager()
 login_manager.init_app(app)
-db = SQLAlchemy(app)
-
-
-class User(UserMixin, db.Model):
-    userid = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
-    password = db.Column(db.String(128))
-
-    def get_id(self):
-        return self.userid
-
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
 
 
 @login_manager.user_loader
