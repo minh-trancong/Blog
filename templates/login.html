@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>Log In</title>
+    <link rel="stylesheet" type="text/css" href="static/css/iofrm-style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/iofrm-theme3.css">
+</head>
+<div class="form-body" class="container-fluid">
+    <div class="website-logo">
+        <a href="https://vn.got-it.ai/" target="_blank">
+            <div class="logo">
+                <img class="logo-size" src="static/images/logo-got-it.svg" alt="">
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <div class="img-holder">
+            <div class="bg"></div>
+            <div class="info-holder">
+            </div>
+        </div>
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Welcome to Got It's Blog</h3>
+                    <p>All the useful information is gathered.</p>
+                    <div class="page-links">
+                        <a href="/login" class="active">Login</a><a href="/register">Register</a>
+                    </div>
+                    <form action="/login" method="post">
+                        {{ LoginForm.email }}
+                        {{ LoginForm.password }}
+                        <p style="font-size: small; color: red; font-weight: bold">{{ message }}</p>
+                        <div class="form-button">
+                            {{ LoginForm.submit(class="ibtn") }}
+                        </div>
+                    </form>
+                    <div class="other-links">
+                        <span>Or login with</span>
+                        <a href="https://www.facebook.com/connect/login_success.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
