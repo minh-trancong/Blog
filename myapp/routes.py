@@ -1,6 +1,6 @@
 import requests
 from flask import render_template, session, redirect, url_for, request
-from flask_login import LoginManager, login_required, login_user, logout_user
+from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 
 from app import app
 from myapp.forms import LoginForm, RegisterForm
@@ -22,7 +22,7 @@ def index():
 @app.route('/home')
 @login_required
 def home():
-    result = requests.get(url_for('get_user', userid=session['id'], _external=True)).json()
+    result = requests.get(url_for('get_user', userid=current_user.get_id(), _external=True)).json()
     username = result["username"]
     return render_template('home.html', username=username)
 

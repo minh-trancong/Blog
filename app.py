@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_mysqldb import MySQL
+from flask_session import Session
 
 from config import Config
 
@@ -11,4 +12,4 @@ if __name__ == '__main__':
     app.run()
 
 from myapp import routes
-from myapp.api import users
+from myapp.api import users, login_google
