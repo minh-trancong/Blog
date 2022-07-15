@@ -16,12 +16,5 @@ class Config(object):
     MYSQL_PASSWORD = '123'
     MYSQL_DB = 'blog'
 
-    # Đăng nhập bằng Google
-    GOOGLE_CLIENT_ID = "811649600099-vam2ntbjisad228kaa8atma7kbenacqe.apps.googleusercontent.com"
-    GOOGLE_CLIENT_SECRET = "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"
-    GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
 
 
-def url(path):
-    host_link = 'http://127.0.0.1:5000'
-    return host_link + path

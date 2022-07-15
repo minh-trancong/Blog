@@ -1,8 +1,17 @@
 import MySQLdb.cursors
-from flask import jsonify, request
+from flask import jsonify, request, url_for, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import app, mysql
+
+
+@app.route('/api/users', methods=['GET'])
+def get_all_user():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM `User`")
+    result = cursor.fetchall()
+    result = {'all_users': [dict(id=i['userid'], email=i['email']) for i in result]}
+    return jsonify(result)
 
 
 @app.route('/api/users/<int:userid>', methods=['GET'])
@@ -14,8 +23,8 @@ def get_user(userid):
     return jsonify(result)
 
 
-@app.route('/api/login', methods=['POST'])
-def get_login():
+@app.route('/api/login', methods=['GET', 'POST'])
+def login():
     data = request.json
     email = data['email']
     password = data['password']
