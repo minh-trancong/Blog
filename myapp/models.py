@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     firstname = db.Column(db.String(255))
     lastname = db.Column(db.String(255))
     occupation = db.Column(db.String(255))
+    phone = db.Column(db.String(255))
 
     def get_id(self):
         return self.userid
@@ -23,4 +24,4 @@ class User(UserMixin, db.Model):
 
     def get_info(self):
         return dict(userid=self.userid, username=self.username, email=self.email, password=self.password,
-                    firstname=self.firstname, lastname=self.lastname, occupation=self.occupation)
+                    firstname=self.firstname, lastname=self.lastname, occupation=self.occupation, phone=self.phone)

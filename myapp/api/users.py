@@ -79,3 +79,23 @@ def delete_user(userid):
     db.session.delete(user)
     db.session.commit()
     return jsonify(message="Delete Successfully!", account=userinfo, code=200)
+
+
+@app.route('/api/update/users/<int:userid>', methods=['PUT'])
+def update_information(userid):
+    data = request.json
+    user = User.query.get(userid)
+    if 'occupation' in data:
+        user.occupation = data['occupation']
+    else:
+        return jsonify(message="Not input in {x} field".format(x='occupation'), code=204)
+    if 'phone' in data:
+        user.phone = data['phone']
+    else:
+        return jsonify(message="Not input in {x} field".format(x='phone'), code=204)
+    if 'lastname' in data:
+        user.lastname = data['lastname']
+    else:
+        return jsonify(message="Not input in {x} field".format(x='lastname'), code=204)
+    db.session.commit()
+    return jsonify(message="Update successfully", code=200, user=user.get_info())
