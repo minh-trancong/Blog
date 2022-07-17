@@ -2,12 +2,13 @@ import google_auth_oauthlib.flow
 import requests
 from flask import redirect, session, url_for, request, jsonify
 from flask_login import login_user, current_user
+from flask_session import Session
 from werkzeug.security import generate_password_hash
 from myapp.forms import OccupationForm
 
 from app import app
 from myapp.models import User, db
-
+Session(app)
 # Các keys để dùng API trong file 'client_secret.json'
 CLIENT_SECRETS_FILE = "client_secret.json"
 
@@ -54,7 +55,9 @@ def google_register():
         user = User(username=username, email=email, firstname=firstname, lastname=lastname, password="NoPassword")
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for('google_post_occupation', userid=user.get_id()))
+        session['registered_id'] = user.get_id()
+        url = url_for('google_post_occupation', userid=user.get_id())
+        return jsonify(account=user.get_info(), redirect_url_api=url, message="Registered successfully!")
 
 
 # Body: occupation
@@ -99,12 +102,11 @@ def google_oauth2callback():
     if res['code'] == 200:
         user = User.query.get(res['account']['userid'])
         login_user(user)
+        return redirect(url_for('home', _external=True))
     else:
-        res1 = requests.post(url_for('google_register', _external=True), json=dict(token=token['access_token'],allow_redirects=True))
-        print(res1.url)
-        # user = User.query.get(res1['account']['userid'])
-        # login_user(user)
-    return redirect(url_for('home', _external=True))
+        data = requests.post(url_for('google_register', _external=True), json=dict(token=token['access_token'])).json()
+        id = data['account']['userid']
+        return redirect(url_for('post_occupation', id=id, _external=True))
 
 
 def credentials_to_dict(credentials):

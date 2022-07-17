@@ -7,6 +7,6 @@
         {{ form.other() }}
         <br>
         {{ form.submit() }}
-        <div class="text-success">{{ msg }}</div>
+        <div class="text-success">{{ msg | safe }}</div>
     </form>
 {% endblock %}

@@ -72,7 +72,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/google/<int:id>/occupation', methods=['GET', 'POST'])
+@app.route('/add/occupation/<int:id>', methods=['GET', 'POST'])
 def post_occupation(id):
     form = OccupationForm()
     msg = ""
@@ -83,5 +83,7 @@ def post_occupation(id):
             occ = form.occupation.data
         body = dict(occupation=occ)
         res = requests.post(url_for("google_post_occupation", userid=id, _external=True), json=body).json()
-        msg = 'Update occupation = {occ} successfully'.format(occ=res['account']['occupation'])
+        msg = 'Update occupation = {occ} successfully, go to <a href="{link}"> Home Page </a>'.format(occ=res['account']['occupation'], link=url_for("home", _external=True))
+        user = User.query.get(id)
+        login_user(user)
     return render_template('occupation.html', form=form, id=id, msg=msg)
