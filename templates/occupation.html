@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Enter occupation</h1>
+    <form action="{{ url_for('post_occupation', id=id, _external=True) }}" method="post">
+        {{ form.occupation() }}
+        {{ form.other.label }}
+        {{ form.other() }}
+        <br>
+        {{ form.submit() }}
+        <div class="text-success">{{ msg }}</div>
+    </form>
+{% endblock %}

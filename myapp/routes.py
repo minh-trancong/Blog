@@ -3,8 +3,9 @@ from flask import render_template, session, redirect, url_for, request
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 
 from app import app
-from myapp.forms import LoginForm, RegisterForm
+from myapp.forms import LoginForm, RegisterForm, OccupationForm
 from myapp.models import User
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -39,15 +40,15 @@ def login_form():
     if request.method == 'POST':
         body = dict(email=form.email.data, password=form.password.data)
         result = requests.post(url_for('login', _external=True), json=body).json()
-        if result["status"] == 401:
+        if result["code"] == 401:
             if form.email.data is None or form.password.data is None:
                 msg = ""  # Khi load form login lần đầu, sẽ không hiện error
             else:
                 msg = result["message"]
         else:
             session['loggedin'] = True
-            session['id'] = result['userid']
-            user = User.query.get(result['userid'])
+            session['id'] = result['account']['userid']
+            user = User.query.get(result['account']['userid'])
             login_user(user)
             return redirect(url_for('home'))
     return render_template('login.html', LoginForm=form, message=msg)
@@ -69,3 +70,18 @@ def register_form():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/google/<int:id>/occupation', methods=['GET', 'POST'])
+def post_occupation(id):
+    form = OccupationForm()
+    msg = ""
+    if request.method == 'POST':
+        if form.occupation.data not in ["student", "teacher"]:
+            occ = form.other.data
+        else:
+            occ = form.occupation.data
+        body = dict(occupation=occ)
+        res = requests.post(url_for("google_post_occupation", userid=id, _external=True), json=body).json()
+        msg = 'Update occupation = {occ} successfully'.format(occ=res['account']['occupation'])
+    return render_template('occupation.html', form=form, id=id, msg=msg)

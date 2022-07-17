@@ -3,6 +3,8 @@ from flask import jsonify, request, url_for, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import app, mysql
+from sqlalchemy import delete
+from myapp.models import User, db
 
 
 @app.route('/api/users', methods=['GET'])
@@ -32,13 +34,13 @@ def login():
     cursor.execute('SELECT * FROM User WHERE email = %s', (email,))
     account = cursor.fetchone()
     if account is None:
-        return jsonify(message="Incorrect email! Please try again!", category="error", status=401)
+        return jsonify(message="Incorrect email! Please try again!", category="error", code=401)
     else:
         validate = check_password_hash(account['password'], password)
         if validate is True:
-            return jsonify(account)
+            return jsonify(account=account, message='Logged in successfully!', code=200)
         else:
-            return jsonify(message="Incorrect password! Please try again!", category="error", status=401)
+            return jsonify(message="Incorrect password! Please try again!", category="error", code=401)
 
 
 @app.route('/api/register', methods=['GET', 'POST'])
@@ -59,7 +61,7 @@ def register():
                 msg = 'Email already exists!'
             elif account['username'] == username:
                 msg = 'Username already exists!'
-            return jsonify(message=msg, category='ERROR', status=409)
+            return jsonify(message=msg, category='ERROR', code=409)
         else:
             cursor.execute('INSERT INTO User(userid, email, username, password) VALUES (NULL, %s, %s, %s);',
                            (email, username, hashed_password))
@@ -67,4 +69,13 @@ def register():
             return jsonify(account=dict(username=username, email=email), message='Register Successfully!')
     else:
         msg = 'Don\'t forget to fill in username, password, and email!'
-        return jsonify(message=msg, category='ERROR', status=409)
+        return jsonify(message=msg, category='ERROR', code=409)
+
+
+@app.route('/api/delete/users/<int:userid>', methods=['DELETE'])
+def delete_user(userid):
+    user = User.query.get(userid)
+    userinfo = user.get_info()
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify(message="Delete Successfully!", account=userinfo, code=200)

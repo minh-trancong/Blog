@@ -13,9 +13,14 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(255))
     firstname = db.Column(db.String(255))
     lastname = db.Column(db.String(255))
+    occupation = db.Column(db.String(255))
 
     def get_id(self):
         return self.userid
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+    def get_info(self):
+        return dict(userid=self.userid, username=self.username, email=self.email, password=self.password,
+                    firstname=self.firstname, lastname=self.lastname, occupation=self.occupation)

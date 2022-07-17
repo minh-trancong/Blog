@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField
+from wtforms import StringField, SubmitField, PasswordField, EmailField, RadioField
 
 
 class LoginForm(FlaskForm):
@@ -16,3 +16,9 @@ class RegisterForm(FlaskForm):
     password = PasswordField("Password", render_kw={"placeholder": "Password"})
     email = EmailField("Email", render_kw={"placeholder": "Email"})
     submit = SubmitField("Sign up")
+
+
+class OccupationForm(FlaskForm):
+    other = StringField("Other")
+    occupation = RadioField("Occupation", choices=[("student", "Student"), ("teacher", "Teacher"), ("other", "Other")])
+    submit = SubmitField("Submit")
