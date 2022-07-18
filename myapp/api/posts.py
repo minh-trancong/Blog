@@ -39,10 +39,15 @@ def post_create(id):
     return jsonify(post=post.get_info(), message="Create a post successfully", code=200)
 
 
-@app.route('/api/posts/<int:id>', methods=['GET'])
+@app.route('/api/posts/<int:id>', methods=['GET', 'DELETE'])
 def get_post(id):
     post = Post.query.get(id)
     if post:
-        return jsonify(post=post.get_info(), message="Successfully")
+        if request.method == 'GET':
+            return jsonify(post=post.get_info(), message="Successfully")
+        elif request.method == 'DELETE':
+            db.session.delete(post)
+            db.session.commit()
+            return jsonify(post=post.get_info(), message="DELETE successfully")
     else:
         return jsonify(message="No posts founded", code=404)
