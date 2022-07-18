@@ -1,14 +1,28 @@
 # Blog
 ## Installation
 
+- mysql
+- database for mysql with script to CREATE TABLE provided [create_blog.sql](./create_blog.sql)
+- flask and python required packages (Tải pycharm và tải các thư viện cần thiết)
+
+```shell
+git clone https://github.com/minh-trancong/Blog.git
+```
+
+```shell
+python3 -m venv Blog
+cd Blog
+source bin/activate
+pip3 install flask
+```
+
 ```shell
 pip3 install -r requirements.txt
 ```
 
-- mysql
-- database for mysql with script to CREATE TABLE provided [create_blog.sql](./create_blog.sql)
-- flask and python required packages
-
+```shell
+flask run
+```
 
 ## API
 
