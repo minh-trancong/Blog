@@ -1,5 +1,3 @@
-from flask import jsonify, request
-import datetime
 import datetime
 
 from flask import jsonify, request
@@ -13,8 +11,13 @@ def get_user_post(id):
     post = Post.query.filter_by(userid=id).all()
     post_export = {}
     for i in range(len(post)):
-        post_export[i + 1] = post[i].get_info()
-        post_export[i + 1]['body'] = post[i].get_info()['body'][:100]
+        info = post[i].get_info()
+        post_export[i + 1] = info
+        if len(info['body']) > 100:
+            dots = "..."
+        else:
+            dots = ""
+        post_export[i + 1]['body'] = info['body'][:100] + dots
     return jsonify(post_count=len(post), post_details=post_export)
 
 
