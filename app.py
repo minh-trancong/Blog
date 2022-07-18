@@ -16,4 +16,4 @@ if __name__ == '__main__':
     app.run()
 
 from myapp import routes
-from myapp.api import users, login_google, posts
+from myapp.api import users, login_google, posts, react
