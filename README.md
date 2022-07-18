@@ -1,10 +1,9 @@
 # Blog
-## Các tính năng
-### Login
-- Login with Facebook
-- Login with Google
-### Register
-### Logout
+## Installation
+
+- mysql
+- database for mysql with script to CREATE TABLE provided
+- flask and python required packages
 
 
 ## API
@@ -37,4 +36,8 @@
 '/api/reacts/posts/<int:postid>/likes' [GET]
 '/api/reacts/users/<int:userid>/posts/<int:postid>' [GET, POST, DELETE]
 ```
+
+## INTERACT WITH WEB
+
+- Go to http://127.0.0.1:5000 and experience some features.
 
