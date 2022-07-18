@@ -6,7 +6,7 @@ pip3 install -r requirements.txt
 ```
 
 - mysql
-- database for mysql with script to CREATE TABLE provided
+- database for mysql with script to CREATE TABLE provided [create_blog.sql](./create_blog.sql)
 - flask and python required packages
 
 
