@@ -30,8 +30,8 @@ class User(UserMixin, db.Model):
 
 class Post(UserMixin, db.Model):
     postid = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), index=True)
-    body = db.Column(db.String(255), index=True)
+    title = db.Column(db.String(1000), index=True)
+    body = db.Column(db.String(8000), index=True)
     userid = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime)
 
@@ -42,4 +42,4 @@ class Post(UserMixin, db.Model):
         return '<Post {}>'.format(self.title)
 
     def get_info(self):
-        return dict(postid=self.postid, title=self.title, body=self.body, userid=self.userid, timestamp=self.timestamp )
+        return dict(postid=self.postid, title=self.title, body=self.body, userid=self.userid, timestamp=self.timestamp)

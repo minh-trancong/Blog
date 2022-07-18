@@ -1,18 +1,20 @@
-import MySQLdb.cursors
-from flask import jsonify, request, url_for, redirect
-from werkzeug.security import check_password_hash, generate_password_hash
+from flask import jsonify, request
 import datetime
-from app import app, mysql
-from sqlalchemy import delete
-from myapp.models import User, db, Post
+import datetime
+
+from flask import jsonify, request
+
+from app import app
+from myapp.models import db, Post
 
 
 @app.route('/api/users/<int:id>/posts')
-def get_post(id):
+def get_user_post(id):
     post = Post.query.filter_by(userid=id).all()
     post_export = {}
     for i in range(len(post)):
-        post_export[i+1] = post[i].get_info()
+        post_export[i + 1] = post[i].get_info()
+        post_export[i + 1]['body'] = post[i].get_info()['body'][:100]
     return jsonify(post_count=len(post), post_details=post_export)
 
 
@@ -32,3 +34,12 @@ def post_create(id):
     db.session.add(post)
     db.session.commit()
     return jsonify(post=post.get_info(), message="Create a post successfully", code=200)
+
+
+@app.route('/api/posts/<int:id>', methods=['GET'])
+def get_post(id):
+    post = Post.query.get(id)
+    if post:
+        return jsonify(post=post.get_info(), message="Successfully")
+    else:
+        return jsonify(message="No posts founded", code=404)
