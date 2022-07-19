@@ -15,7 +15,7 @@ def fb_login():
     input_token = body['input_token']
     access_token = body['access_token']
     data = requests.get('graph.facebook.com/debug_token?input_token={input_token}&access_token={access_token}'.format(input_token=input_token, access_token=access_token)).json()
-    uinfo = request.get('https://graph.facebook.com/v14.0/{user_id}'.format(user_id=data['user_id']), json=jsonify(access_token=access_token)).json()
+    uinfo = requests.get('https://graph.facebook.com/v14.0/{user_id}'.format(user_id=data['user_id']), json=jsonify(access_token=access_token)).json()
     user = User.query.filter_by(email=uinfo['email'])
     if user:
         login_user(user)
