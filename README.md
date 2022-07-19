@@ -43,6 +43,7 @@ flask run
 ```
 
 ```python
+'/api/posts/page=<int:pageid>' [GET]
 '/api/posts/<int:id>' [GET, DELETE]
 '/api/users/<int:id>/posts' [GET]
 '/api/users/<int:id>/posts/create' [POST]

@@ -51,3 +51,17 @@ def get_post(id):
             return jsonify(post=post.get_info(), message="DELETE successfully")
     else:
         return jsonify(message="No posts founded", code=404)
+
+
+@app.route('/api/posts/page=<int:pageid>', methods=['GET'])
+def get_all_posts(pageid):
+    post = Post.query.paginate(pageid, 10, False)
+    p_ex = {}
+    i = 0
+    for p in post.items:
+        p_ex[i] = p.get_info()
+        if len(p.get_info()['body']) > 100:
+            p_ex[i]['body'] = p.get_info()['body'][:100] + "..."
+        i = i + 1
+    return jsonify(posts=p_ex)
+
