@@ -3,6 +3,7 @@
 
 - mysql
 ```shell
+brew install mysql
 mysql.server start
 ```
 - database for mysql with script to CREATE TABLE provided [create_blog.sql](./create_blog.sql)
