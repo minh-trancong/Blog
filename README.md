@@ -2,10 +2,6 @@
 ## Installation
 
 - mysql
-```shell
-brew install mysql
-mysql.server start
-```
 - database for mysql with script to CREATE TABLE provided [create_blog.sql](./create_blog.sql)
 - flask and python required packages (Tải pycharm và tải các thư viện cần thiết)
 
@@ -65,4 +61,7 @@ flask run
 
 | ![image-20220719084707341](pic/image-20220719084707341.png) | ![image-20220719084700084](pic/image-20220719084700084.png) |
 | ----------------------------------------------------------- | ----------------------------------------------------------- |
+| ![image-20220719085359163](pic/image-20220719085359163.png) | ![image-20220719085215612](pic/image-20220719085215612.png) |
+
+
 
