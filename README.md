@@ -40,6 +40,7 @@ flask run
 '/api/google/<int:userid>/occupation' [GET, POST]
 '/api/google/checkmail'
 '/api/google/callback'
+'/api/facebook/register/' [GET, POST] -> register with access_token or login if exists
 ```
 
 ```python
