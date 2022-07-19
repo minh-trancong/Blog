@@ -13,7 +13,7 @@ Session(app)
 mysql = MySQL(app)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=1123)
+    app.run(debug=True)
 
 from myapp import routes
-from myapp.api import users, login_google, posts, react
+from myapp.api import users, login_google, posts, react, login_facebook
