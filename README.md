@@ -2,8 +2,15 @@
 ## Installation
 
 - mysql
-- database for mysql with script to CREATE TABLE provided [create_blog.sql](./create_blog.sql)
-- flask and python required packages (You had better install PyCharm and install required packages).
+
+```shell
+brew install mysql
+mysql.server start
+```
+
+- Can connect with MySQL via dBeaver to edit script and create database
+- Database for mysql with script to CREATE TABLE provided [create_blog.sql](./create_blog.sql)
+- Flask and Python required packages (You had better install PyCharm and install required packages).
 
 ```shell
 git clone https://github.com/minh-trancong/Blog.git
@@ -23,6 +30,8 @@ pip3 install -r requirements.txt
 ```shell
 flask run
 ```
+
+*or run via Pycharm*
 
 ## API
 
