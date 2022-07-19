@@ -2,6 +2,9 @@
 ## Installation
 
 - mysql
+```shell
+mysql.server start
+```
 - database for mysql with script to CREATE TABLE provided [create_blog.sql](./create_blog.sql)
 - flask and python required packages (Tải pycharm và tải các thư viện cần thiết)
 
