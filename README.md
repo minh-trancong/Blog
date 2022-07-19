@@ -27,11 +27,13 @@ flask run
 ## API
 
 ```python
-'/api/login', methods=['GET', 'POST']
-'/api/register', methods=['GET', 'POST']
-'/api/update/users/<int:userid>', methods=['PUT']
-'/api/users', methods=['GET'] -> Get all users
-'/api/users/<int:userid>', methods=['GET'] -> Get specific user information by his/her id
+'/api/login', [GET, POST]
+'/api/register' [GET, POST]
+'/api/update/users/<int:userid>' methods=[PUT]
+'/api/users', [GET] -> Get all users
+'/api/users/<int:userid>' [GET] -> Get specific user information by his/her id
+'/api/delete/users/<int:userid>' [DELETE]
+'/api/update/users/<int:userid>' [PUT]
 ```
 
 ```python
