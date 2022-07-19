@@ -15,4 +15,7 @@ def fb_login():
     input_token = body['input_token']
     access_token = body['access_token']
     data = requests.get('graph.facebook.com/debug_token?input_token={input_token}&access_token={access_token}'.format(input_token=input_token, access_token=access_token)).json()
-    return jsonify(msg="ok", data=data)
+    if data['is_valid']:
+        return jsonify(msg="ok", data=data)
+    else:
+        return jsonify(msg="Not ok", data=data)
