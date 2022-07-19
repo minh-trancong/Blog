@@ -14,15 +14,23 @@ def fb_login():
     body = request.json
     input_token = body['input_token']
     access_token = body['access_token']
-    data = requests.get('graph.facebook.com/debug_token?input_token={input_token}&access_token={access_token}'.format(input_token=input_token, access_token=access_token)).json()
-    uinfo = requests.get('https://graph.facebook.com/v14.0/{user_id}'.format(user_id=data['user_id']), json=jsonify(access_token=access_token)).json()
-    user = User.query.filter_by(email=uinfo['email'])
-    if user:
-        login_user(user)
-        return jsonify(message="Login successfully", account=user.get_info())
+    data = requests.get('https://graph.facebook.com/debug_token?input_token={input_token}&access_token={access_token}'.format(input_token=input_token, access_token=access_token)).json()
+    if 'user_id' in data['data']:
+        uinfo = requests.get('https://graph.facebook.com/v14.0/{user_id}?fields=email,name,last_name,first_name&access_token={access_token}'.format(
+            user_id=data['data']['user_id'], access_token=input_token)).json()
+        user = User.query.filter_by(email=uinfo['email']).first()
+        print(user)
+        if user:
+            login_user(user)
+            return jsonify(message="Login successfully", account=user.get_info())
+        else:
+            # Register
+            username = uinfo['email'].split('@')[0]
+            user = User(firstname=uinfo['first_name'], lastname=uinfo['last_name'], email=uinfo['email'],
+                        password='NoPassword', username=username)
+            db.session.add(user)
+            db.session.commit()
+            return jsonify(message="Register successfully", account=user.get_info())
     else:
-        # Register
-        user = User(firstname=uinfo['first_name'], lastname=uinfo['last_name'], email=uinfo['email'], password='NoPassword')
-        db.session.add(user)
-        db.session.commit()
-        return jsonify(message="Register successfully", account=user.get_info())
+        return data
+
